@@ -27,6 +27,15 @@
     font-weight: normal;
     font-style: normal;
   }
+  /* ***********************Style Modal**************************** */
+  .modalContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+/* ********************************************************************* */
 #preH{
     display: flex;
     justify-content: space-between;
@@ -111,12 +120,13 @@ form div{
     flex-wrap: wrap;
 }
 nav{
-    height: 200px;
+    height: 250px;
     line-height: 30px;
     border: 1px solid #f1f1f1;
     border-radius: 15px;
     background: #f1f1f1;
     padding: 15px;
+    margin-top: 0;
     text-transform: uppercase;
 }
 nav ul{
@@ -127,7 +137,7 @@ nav ul{
 nav ul li a{
     text-decoration: none;
     color: black;
-    font-weight: 800;
+    font-weight: 900;
 }
 nav ul li:first-child a{
     color: #ee5057;
