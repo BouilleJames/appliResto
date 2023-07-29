@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { pool } = require("../config/db");
+require("dotenv").config();
 
 module.exports = (req, res, next) => {
   try {

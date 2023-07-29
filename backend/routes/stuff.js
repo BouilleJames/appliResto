@@ -1,28 +1,13 @@
-// const express = require("express");
-// const auth = require("../middleware/auth");
-// const router = express.Router();
-// const axios = require("axios");
-// const multer = require("../middleware/multer-config");
-
-// const stuffCtrl = require("../controllers/stuff");
-
-// router.get("/", auth, stuffCtrl.getAllThings);
-// router.post("/", auth, multer, stuffCtrl.createThing);
-// router.get("/:id", auth, stuffCtrl.getOneThing);
-// router.put("/:id", auth, multer, stuffCtrl.modifyThing);
-// router.delete("/:id", auth, stuffCtrl.deleteThing);
-
-// module.exports = router;
-
 const express = require("express");
 const auth = require("../middleware/auth");
 const router = express.Router();
 const multer = require("../middleware/multer-config");
 const pool = require("../config/db"); // Importez le pool de connexions
+const fs = require("fs"); // Ajout de la dépendance fs pour pouvoir utiliser fs.unlink()
 
 router.get("/", auth, (req, res, next) => {
   pool
-    .execute("SELECT * FROM items") // Remplacez "articles" par "items"
+    .execute("SELECT * FROM items")
     .then(([rows]) => {
       res.status(200).json(rows);
     })
@@ -39,11 +24,15 @@ router.post("/", auth, multer, (req, res, next) => {
   delete thingObject._id;
   delete thingObject.userId;
 
+  const { title, description, price } = thingObject;
+  const userId = req.auth.userId;
   const imageUrl = `${req.protocol}://${req.get("host")}/images/${
     req.file.filename
   }`;
-  const { title, description, price } = thingObject;
-  const userId = req.auth.userId;
+  // Validation côté serveur : Vérifier que les champs ne sont pas vides
+  if (!title || !description || !price || !req.file) {
+    return res.status(400).json({ error: "Veuillez remplir tous les champs" });
+  }
 
   pool
     .execute(
@@ -87,7 +76,7 @@ router.put("/:id", auth, multer, (req, res, next) => {
         ...JSON.parse(req.body.thing),
         image_url: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
-        }`,
+        }`, // Utilisation de req.file.filename pour obtenir le nom du fichier enregistré
       }
     : { ...req.body };
 
@@ -106,14 +95,29 @@ router.put("/:id", auth, multer, (req, res, next) => {
       }
 
       const { title, description, price, image_url } = thingObject;
-      return pool.execute(
-        "UPDATE items SET title=?, description=?, price=?, image_url=? WHERE id=?",
-        [title, description, price, image_url, thingId]
-      );
+      const filename = thing.image_url.split("/images/")[1];
+
+      // Supprimer l'ancienne image du serveur avant de mettre à jour la base de données
+      fs.unlink(`images/${filename}`, (error) => {
+        if (error) {
+          console.error("Erreur lors de la suppression du fichier :", error);
+        }
+        // Mettre à jour l'objet dans la base de données avec la nouvelle image_url
+        pool
+          .execute(
+            "UPDATE items SET title=?, description=?, price=?, image_url=? WHERE id=?",
+            [title, description, price, image_url, thingId]
+          )
+          .then(() => {
+            res.status(200).json({ message: "Objet modifié avec succès !" });
+          })
+          .catch((error) =>
+            res
+              .status(400)
+              .json({ error: "Erreur lors de la modification de l'objet" })
+          );
+      });
     })
-    .then(() =>
-      res.status(200).json({ message: "Objet modifié avec succès !" })
-    )
     .catch((error) =>
       res
         .status(400)
