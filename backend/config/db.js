@@ -40,7 +40,8 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise();
 
-module.exports = {
-  pool: promisePool, // Exporter le pool de connexions correctement
-  execute: pool.execute, // Exporter la méthode execute pour effectuer des requêtes directes
-};
+// module.exports = {
+//   pool: promisePool, // Exporter le pool de connexions correctement
+//   execute: pool.execute, // Exporter la méthode execute pour effectuer des requêtes directes
+// };
+module.exports = promisePool;

@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Logo = () => {
   return (
-    <div className="vh-10 d-flex flex-column align-items-center justify-content-center bg-primary">
+    <div className="vh-10 d-flex flex-column align-items-center justify-content-center bg-secondary">
       <div>
         {/* Les images importées depuis la balise IMG sont accessibles dans "public" */}
         <img src="/logo.jpg" alt="logo restaurant" />

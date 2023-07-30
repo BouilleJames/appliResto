@@ -2,7 +2,7 @@ const express = require("express");
 const app = require("./app");
 const { pool } = require("./config/db"); // Importation du pool de connexions MySQL
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 // Middleware qui permet de traiter les données de la requête
 app.use(express.json());

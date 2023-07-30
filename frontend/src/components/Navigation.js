@@ -19,7 +19,7 @@ const Navigation = () => {
           to="/cart"
           className={(nav) => (nav.isActive ? "nav-active" : "")}
         >
-          <li>Blog</li>
+          <li>Panier</li>
         </NavLink>
       </ul>
     </div>

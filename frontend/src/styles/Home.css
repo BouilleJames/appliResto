@@ -1,4 +1,4 @@
-/* Path: frontend\src\App.js
+/* Path: frontend\src\App.js */
 .container {
   width: 1000px;
   margin: auto;
@@ -28,7 +28,7 @@ header .shopping span {
   left: 80px;
   padding: 3px 10px;
 }
-.List {
+.list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 20px;
@@ -78,49 +78,50 @@ header .shopping span {
 }
 .active .container {
   transform: translateX(-200px);
-} */
-
-/* .App {
+}
+.list .item {
   text-align: center;
+  background-color: #dce0e1;
+  padding: 20px;
+  box-shadow: 0 50px 50px #757676;
+  letter-spacing: 1px;
+}
+.list .item img {
+  width: 90%;
+}
+.list .item .title {
+  font-weight: 600;
+}
+.list .item .price {
+  margin: 10px;
+}
+.list .item button {
+  background-color: #1c1f25;
+  color: #fff;
+  padding: 10px;
+  width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.listCard li {
+  display: grid;
+  grid-template-columns: 100px repeat(3, 1fr);
+  color: #fff;
+  row-gap: 10px;
+  margin-bottom: 20px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.listCard li div {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
-
-.App-link {
-  color: #61dafb;
+.listCard li img {
+  width: 90%;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.listCard button {
+  width: auto;
+  background: #fff5;
+  border: none;
 }
- 
-.title {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-} */
+.listCard .count {
+  margin: 0 10px;
+}

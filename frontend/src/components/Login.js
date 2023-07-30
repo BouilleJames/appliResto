@@ -13,7 +13,7 @@ const Login = () => {
     // Ici, vous pouvez implémenter la logique de connexion en utilisant les valeurs de 'email' et 'password'
     // Par exemple, vous pouvez envoyer une requête HTTP (axios, fetch, etc.) vers votre backend pour vérifier les informations d'identification
     // Validation côté client : Vérifier que les champs ne sont pas vides
-    if (!email || !password) {
+    if (!email || !password || error) {
       setError("Veuillez remplir tous les champs");
       return;
     }
@@ -30,7 +30,14 @@ const Login = () => {
       })
       .catch((error) => {
         setError("Adresse e-mail ou mot de passe incorrect");
+
+        // Afficher l'erreur dans la console
+        console.log(error);
       });
+
+    // Réinitialiser les valeurs des champs
+    setEmail("");
+    setPassword("");
   };
 
   return (
